@@ -73,22 +73,13 @@ local function GetClosestPlayer()
 				if v.Character and v.Character:FindFirstChild(Environment.Settings.LockPart) and v.Character:FindFirstChildOfClass("Humanoid") then
 					if Environment.Settings.TeamCheck and v.Team == LocalPlayer.Team then continue end
 					if Environment.Settings.AliveCheck and v.Character:FindFirstChildOfClass("Humanoid").Health <= 0 then continue end
-					if Environment.Settings.WallCheck then
-                        local partsObscuringTarget = Camera:GetPartsObscuringTarget(v.Character[Environment.Settings.LockPart].Position, v.Character:GetDescendants())
-                        local canSeeThrough = true
-                    
-                        for _, part in ipairs(partsObscuringTarget) do
-                            if part.CanCollide then
-                                canSeeThrough = false
-                                break
-                            end
-                        end
-                    
-                        if not canSeeThrough then
-                            continue
+					if Environment.Settings.WallCheck and #(Camera:GetPartsObscuringTarget({v.Character[Environment.Settings.LockPart].Position}, v.Character:GetDescendants())) > 0 then continue end
+                    for _,v in ipairs(Camera:GetPartsObscuringTarget(v.Character[Environment.Settings.LockPart].Position, v.Character:GetDescendants())) do
+                        if v.CanCollide == true then
+                            v.CanCollide = false
+                            break
                         end
                     end
-                    
 					local Vector, OnScreen = Camera:WorldToViewportPoint(v.Character[Environment.Settings.LockPart].Position)
 					local Distance = (Vector2(UserInputService:GetMouseLocation().X, UserInputService:GetMouseLocation().Y) - Vector2(Vector.X, Vector.Y)).Magnitude
 
