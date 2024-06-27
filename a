@@ -74,7 +74,7 @@ local function GetClosestPlayer()
 					if Environment.Settings.TeamCheck and v.Team == LocalPlayer.Team then continue end
 					if Environment.Settings.AliveCheck and v.Character:FindFirstChildOfClass("Humanoid").Health <= 0 then continue end
 					if Environment.Settings.WallCheck and #(Camera:GetPartsObscuringTarget({v.Character[Environment.Settings.LockPart].Position}, v.Character:GetDescendants())) > 0 then 
-					for _,v in ipairs(GetPartsObscuringTarget) do 
+					for _,v in ipairs(PartsObscuringTarget) do 
 						if v.CanCollide == false then
 						continue
 						end 
