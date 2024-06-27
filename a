@@ -75,8 +75,9 @@ local function GetClosestPlayer()
 					if Environment.Settings.AliveCheck and v.Character:FindFirstChildOfClass("Humanoid").Health <= 0 then continue end
 					if Environment.Settings.WallCheck and #(Camera:GetPartsObscuringTarget({v.Character[Environment.Settings.LockPart].Position}, v.Character:GetDescendants())) > 0 then 
 					for _,v in ipairs(partsObscuringTarget) do 
-						if not v.CanCollide == false then
-						continue 
+						if v.CanCollide == false then
+						continue
+						break
 						end 
 					end
 					end
